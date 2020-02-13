@@ -1,5 +1,2 @@
-function main(){
-	console.log("Hello goorm!");
-}
-
-main();
+const path = require('path')
+const express = require('express')
