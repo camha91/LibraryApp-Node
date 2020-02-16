@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/camha91/LibraryApp-Node#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "hbs": "^4.1.0",
+    "path": "^0.12.7",
+    "request": "^2.88.2"
   }
 }
