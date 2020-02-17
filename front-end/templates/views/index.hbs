@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Library</title>
+	// <link rel="icon" href="/img/library.png">
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<div class="main-content">
+		{{>header}}
+		
+		<p>Use this site to get your book by ISBN!</p>
+		
+		<form>
+			<input placeholder="BOOK ISBN">
+			<button>Search</button>
+		</form>
+		
+		<p id="message-1"></p>
+		<p id="message-2"></p>
+		
+	</div>
+	
+	{{>footer}}
+	
+	<script src="/js/app.js"></script>
+</body>
+
+</html>

@@ -32,9 +32,27 @@ app.get('/about', (req, res) => {
 app.get('/shopping_cart', (req, res) => {
 	res.render('shopping cart', {
 		title: 'Shopping Cart',
+		bookToBorrow: 'Here are the books you want to borrow from the library!'
 		name: 'Camha Nguyen'
 	})
 })
+
+app.get('/shopping_cart/*', (req, res) => {
+	res.render('404', {
+		title: '404',
+		errorMessage: 'Shopping cart item not found.',
+		name: 'Camha Nguyen'
+	})
+})
+
+app.get('*', (req, res) => {
+	res.render('404', {
+		title: '404',
+		errorMessage: 'Page not found.',
+		name: 'Camha Nguyen'
+	})
+})
+
 
 
 app.listen(port, () => {
