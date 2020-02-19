@@ -2,30 +2,69 @@
 
 <html>
 
-<head>
-	<title>Library</title>
-	// <link rel="icon" href="/img/library.png">
-	<link rel="stylesheet" href="/css/style.css">
-</head>
+{{>head}}
 
 <body>
-	<div class="main-content">
+	<div class="container">
 		{{>header}}
-		
-		<p>Use this site to get your book by ISBN!</p>
-		
+
 		<form>
-			<input placeholder="BOOK ISBN">
-			<button>Search</button>
+			<div class="row">
+				<div class="col s12">
+					Use this site to search your book by ISBN:
+					<div class="input-field inline">
+						<input id="isbn_inline" type="text" class="validate">
+						<label for="isbn_inline">BookISBN</label>
+					</div>
+					<button>Search</button>
+				</div>
+			</div>
+
 		</form>
-		
-		<p id="message-1"></p>
-		<p id="message-2"></p>
-		
+		<div class="row">
+			<div class="col s12 m6">
+				<div class="card blue-grey darken-1">
+					<div class="card-content white-text">
+						<span class="card-title">Book Title</span>
+						<p>Book Summary: Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ipsam sint accusantium, quisquam laboriosam, perspiciatis culpa consequatur ea, illo numquam cupiditate alias pariatur nobis consectetur suscipit voluptates quod molestiae?
+							Rem!
+						</p>
+					</div>
+					<div class="card-action">
+						<a href="#">Borrow</a>
+						<a href="#">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Book Count -->
+		<h3 class="center-align">Total Books:
+			<span class="total-books">0</span>
+		</h3>
+
+		<!-- Item List -->
+		<ul id="item-list" class="collection">
+
+			<li class="collection-item" id="book-0">
+				<strong>Book: </strong>
+				<em>One World Worker</em>
+				&emsp;
+				<strong>Author: </strong>
+				<em>OWW</em>
+				&emsp;
+				<strong>Pages: </strong>
+				<em>922</em>
+				<a href="#" class="secondary-content">
+					<i class="edit-item fa fa-pencil"></i>
+				</a>
+			</li>
+
+		</ul>
+
+		{{>footer}}
 	</div>
-	
-	{{>footer}}
-	
+
 	<script src="/js/app.js"></script>
 </body>
 

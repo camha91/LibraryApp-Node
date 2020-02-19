@@ -32,7 +32,7 @@ app.get('/about', (req, res) => {
 app.get('/shopping_cart', (req, res) => {
 	res.render('shopping cart', {
 		title: 'Shopping Cart',
-		bookToBorrow: 'Here are the books you want to borrow from the library!'
+		bookToBorrow: 'Here are the books you want to borrow from the library!',
 		name: 'Camha Nguyen'
 	})
 })
