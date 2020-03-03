@@ -16,7 +16,7 @@ libraryForm.addEventListener('submit', (e) => {
 			if (data.error) {
 				messageOne.textContent = data.error
 			} else {
-				messageOne.textContent = data.location
+				messageOne.textContent = data.isbn
 				messageTwo.textContent = data.forecast
 			}
 		})
