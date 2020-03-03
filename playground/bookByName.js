@@ -1,7 +1,7 @@
 const request = require('request')
 
 const bookSearchByName = (bookName, callback) => {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${bookName}&limit=5`
+    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${bookName}&limit=5`
 	
 	console.log(url)
 	
