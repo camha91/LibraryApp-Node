@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
-const bookCode = require('./server/routes/book')
+const bookSearch = require('./server/utils/bookSearchGoogle')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -54,18 +54,22 @@ app.get('*', (req, res) => {
 	})
 })
 
-app.get('/book', (req, res) => {
-	if (!req.query.isbn) {
+app.get('/bookSearch', (req, res) => {
+	if (!req.query.searchValue) {
 		return res.send({
-			error: "Please provide ISBN!"
+			error: "Please provide search item!"
 		})
 	}
 
-	bookCode(req.query.isbn, (error, { title, author, pages, thumbnail } = {}) => {
+	bookSearch(req.query.searchValue, (error, { title, author, pages, rating, thumbnail } = {}) => {
 		if (error) {
 			return res.send({ error })
 		}
+
+		res.send({title, author, pages, rating, thumbnail})
 	})
+})
+
 
 app.listen(port, () => {
 	console.log(`Server is up on port ${port}`)
