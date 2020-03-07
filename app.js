@@ -6,7 +6,7 @@ const bookSearch = require('./server/utils/bookSearchGoogle');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const cssPath = path.join(__dirname, './front-end/css');
+const publicPathDirectory = path.join(__dirname, './front-end');
 const viewsPath = path.join(__dirname, './front-end/templates/views');
 const partialsPath = path.join(__dirname, './front-end/templates/partials');
 
@@ -14,7 +14,7 @@ app.set('view engine', 'hbs');
 app.set('views', viewsPath);
 hbs.registerPartials(partialsPath);
 
-app.use(express.static(cssPath));
+app.use(express.static(publicPathDirectory));
 
 app.get('', (req, res) => {
 	res.render('index', {
@@ -30,15 +30,6 @@ app.get('/about', (req, res) => {
 	});
 });
 
-
-
-app.get('*', (req, res) => {
-	res.render('404', {
-		title: '404',
-		errorMessage: 'Page not found.',
-		name: 'Camha Nguyen'
-	});
-});
 
 app.get('/books', (req, res) => {
 	if (!req.query.searchValue) {

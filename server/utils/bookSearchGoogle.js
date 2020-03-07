@@ -30,8 +30,10 @@ const bookSearch = (searchType, searchValue, callback) => {
 				thumbnail: body.items[0].volumeInfo.imageLinks.thumbnail
 			});
 		};
-	})
+	});
+};
 
+	module.exports = bookSearch;
 // bookSearch('all', '9780605039070', (error, data) => {
 // 	console.log('Error', error);
 // 	console.log('Data', data);
