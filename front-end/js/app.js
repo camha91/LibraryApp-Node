@@ -1,7 +1,14 @@
-const libraryForm = document.querySelector('form');
-const search = document.querySelector('input');
-const messageOne = document.querySelector('#message-1');
-const messageTwo = document.querySelector('#message-2');
+const isbnElement = document.querySelector('#isbn');
+const search = document.querySelector('.search-btn');
+const progressBar = document.querySelector('.progress');
+const bookContent = document.querySelector('.book-content');
+const cardTitle = document.querySelector('.card-title');
+const authors = document.querySelector('.authors');
+const publisher = document.querySelector('.publisher');
+const catgories = document.querySelector('.catgories');
+const pageCount = document.querySelector('.pageCount');
+const bookSummary = document.querySelector('.book-summary');
+const bookImage = document.querySelector('.book-image');
 
 libraryForm.addEventListener('submit', (e) => {
 	

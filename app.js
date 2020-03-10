@@ -3,6 +3,7 @@ const express = require('express');
 const hbs = require('hbs');
 const bookSearch = require('./server/utils/bookSearchGoogle');
 
+console.log('https://libraryappnode1-zpicx.run-us-west2.goorm.io');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,7 +19,6 @@ app.use(express.static(publicPathDirectory));
 
 app.get('', (req, res) => {
 	res.render('index', {
-		title: 'Library App',
 		name: 'Camha Nguyen'
 	});
 });
@@ -40,10 +40,10 @@ app.get('/books', (req, res) => {
 
 	bookSearch(req.query.searchType, req.query.searchValue, (error, { title, author, pages, rating, thumbnail } = {}) => {
 		if (error) {
-			return res.send({ error });
+			return res.send({ error })
 		};
 
-		res.send({ title, author, pages, rating, thumbnail });
+		res.send({ title, author, pages, rating, thumbnail })
 	});
 });
 
