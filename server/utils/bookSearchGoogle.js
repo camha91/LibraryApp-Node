@@ -23,11 +23,14 @@ const bookSearch = (searchType, searchValue, callback) => {
 			callback('Unable to find book! Try another search', undefined);
 		} else {
 			callback(undefined, {
+				id: body.id,
 				title: body.items[0].volumeInfo.title,
-				author: body.items[0].volumeInfo.authors[0],
+				description: body.volumeInfo.description,
+				author: body.items[0].volumeInfo.authors.join(' , '),
+				publisher: body.volumeInfo.publisher,
+				categories: body.volumeInfo.categories.join(' , '),
 				pages: body.items[0].volumeInfo.pageCount,
-				rating: body.items[0].volumeInfo.averageRating,
-				thumbnail: body.items[0].volumeInfo.imageLinks.thumbnail
+				imageLink: `https://books.google.com/books/content?id=${body.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api`
 			});
 		};
 	});

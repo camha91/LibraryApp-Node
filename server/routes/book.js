@@ -1,6 +1,55 @@
-const express = require('express')
-const router = new express.Router()
-const Books = require('../models/book')
+const bookSearch = require('../utils/bookSearch');
+const express = require('express');
+const router = new express.Router();
+const logging = require('.././commonUtils/loggingUtil');
+const logger = logging.getLogger(__filename);
+
+app.get('/books', (req, res) => {
+	logger.debug('<----- Book Router');
+	if (!req.query.searchType || !req.query.searchValue) {
+		return res.send({
+			error: "Please provide search Type and search Value!"
+		});
+	};
+
+	bookSearch(req.query.searchType, req.query.searchValue, (error, { bookData } = {}) => {
+		if (error) {
+			return res.send({ error })
+		};
+		logger.debug(`bookData : ${JSON.stringtify(bookData)}`);
+		
+		res.send({ id, title, description, author, publisher, categories, pages, imageLink })
+	});
+});
+
+// router.get('/books', (req, res) => {
+//    	logger.debug('<----- Book Router');
+//     if (req.query.completed) {
+//         match.completed = req.query.completed === 'true'
+//     }
+   
+//     if (req.query.sortBy) {
+//         const parts = req.query.sortBy.split(':')
+//         sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+//     }
+
+//     try {
+// 		// const tasks = await Tasks.find({ owner: req.user._id})
+// 		await req.user.populate({
+//             path: 'tasks',
+//             match,
+//             options: {
+//                 limit: parseInt(req.query.limit),
+//                 skip: parseInt(req.query.skip)
+//             },
+//             sort
+//         }).execPopulate()
+//         res.send(req.user.tasks)
+//     } catch (e) {
+//         res.status(500).send()
+//     }
+
+// })
 
 // router.post('/books', async (req, res) => {
 //     const book = new Books({
@@ -20,36 +69,6 @@ const Books = require('../models/book')
 // GET /tasks?completed=true
 // GET /tasks?limit=2&skip=5
 // GET /tasks?sortBy=createdAt:desc
-router.get('/books', async (req, res) => {
-    const match = {}
-    const sort = {}
-
-    if (req.query.completed) {
-        match.completed = req.query.completed === 'true'
-    }
-   
-    if (req.query.sortBy) {
-        const parts = req.query.sortBy.split(':')
-        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
-    }
-
-    try {
-		// const tasks = await Tasks.find({ owner: req.user._id})
-		await req.user.populate({
-            path: 'tasks',
-            match,
-            options: {
-                limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip)
-            },
-            sort
-        }).execPopulate()
-        res.send(req.user.tasks)
-    } catch (e) {
-        res.status(500).send()
-    }
-
-})
 
 // router.get('/tasks/:id', auth, async (req, res) => {
 //     try {
@@ -106,4 +125,6 @@ router.get('/books', async (req, res) => {
 //     }
 // })
 
-module.exports = router
+
+
+module.exports = router;
