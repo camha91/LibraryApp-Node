@@ -3,7 +3,7 @@ const logger = logging.getLogger('MainApp');
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
-const bookRouter = require('./server/routers/books');
+const bookRouter = require('./server/routes/book');
 
 console.log('https://libraryappnode1-zpicx.run-us-west2.goorm.io');
 const app = express();

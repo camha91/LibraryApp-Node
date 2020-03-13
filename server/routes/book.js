@@ -1,10 +1,10 @@
-const bookSearch = require('../utils/bookSearch');
+const bookSearch = require('../utils/bookSearchGoogle');
 const express = require('express');
 const router = new express.Router();
-const logging = require('.././commonUtils/loggingUtil');
+const logging = require('../../commonUtils/loggingUtils');
 const logger = logging.getLogger(__filename);
 
-app.get('/books', (req, res) => {
+router.get('/books', (req, res) => {
 	logger.debug('<----- Book Router');
 	if (!req.query.searchType || !req.query.searchValue) {
 		return res.send({
@@ -12,13 +12,23 @@ app.get('/books', (req, res) => {
 		});
 	};
 
-	bookSearch(req.query.searchType, req.query.searchValue, (error, { bookData } = {}) => {
+	bookSearch(req.query.searchType, req.query.searchValue, (error, bookData) => {
 		if (error) {
 			return res.send({ error })
 		};
-		logger.debug(`bookData : ${JSON.stringtify(bookData)}`);
+		logger.debug(`bookData : ${JSON.stringify(bookData)}`);
 		
-		res.send({ id, title, description, author, publisher, categories, pages, imageLink })
+		res.send({ 
+			id: bookData.id,
+			title: `${bookData.volumeInfo.title}: ${bookData.volumeInfo.subtitle}`,
+			description: bookData.volumeInfo.description,
+			authors: bookData.volumeInfo.authors.join(' , '),
+			publisher: bookData.volumeInfo.publisher,
+			categories: bookData.volumeInfo.categories.join(' , '),
+			pageCount: bookData.volumeInfo.pageCount,
+			imageLink: `https://books.google.com/books/content?id=${bookData.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_a
+pi`
+		});
 	});
 });
 

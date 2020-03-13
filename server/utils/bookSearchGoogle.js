@@ -19,25 +19,14 @@ const bookSearch = (searchType, searchValue, callback) => {
 	request({ url, json: true}, (error, { body }) => {
 		if (error) {
 			callback('Unable to connect to book search service', undefined);
-		} else if (body.items.length === 0) {
+		} else if (body.error) {
+			callback('Unable to connect to book search service', body);
+		} else if (body.totalItems === 0) {
 			callback('Unable to find book! Try another search', undefined);
 		} else {
-			callback(undefined, {
-				id: body.id,
-				title: body.items[0].volumeInfo.title,
-				description: body.volumeInfo.description,
-				author: body.items[0].volumeInfo.authors.join(' , '),
-				publisher: body.volumeInfo.publisher,
-				categories: body.volumeInfo.categories.join(' , '),
-				pages: body.items[0].volumeInfo.pageCount,
-				imageLink: `https://books.google.com/books/content?id=${body.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api`
-			});
+			callback(undefined, body.items[0]);
 		};
 	});
 };
 
 	module.exports = bookSearch;
-// bookSearch('all', '9780605039070', (error, data) => {
-// 	console.log('Error', error);
-// 	console.log('Data', data);
-// })
