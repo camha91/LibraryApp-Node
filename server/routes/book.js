@@ -23,7 +23,6 @@ router.get('/books', (req, res) => {
 			title: `${bookData.volumeInfo.title}: ${bookData.volumeInfo.subtitle}`,
 			description: bookData.volumeInfo.description,
 			authors: bookData.volumeInfo.authors.join(' , '),
-			publisher: bookData.volumeInfo.publisher,
 			categories: bookData.volumeInfo.categories.join(' , '),
 			pageCount: bookData.volumeInfo.pageCount,
 			imageLink: `https://books.google.com/books/content?id=${bookData.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_a
