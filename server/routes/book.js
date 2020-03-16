@@ -17,16 +17,16 @@ router.get('/books', (req, res) => {
 			return res.send({ error })
 		};
 		logger.debug(`bookData : ${JSON.stringify(bookData)}`);
-		
+		console.log(bookData);
 		res.send({ 
 			id: bookData.id,
 			title: `${bookData.volumeInfo.title}: ${bookData.volumeInfo.subtitle}`,
-			description: bookData.volumeInfo.description,
 			authors: bookData.volumeInfo.authors.join(' , '),
 			categories: bookData.volumeInfo.categories.join(' , '),
 			pageCount: bookData.volumeInfo.pageCount,
 			imageLink: `https://books.google.com/books/content?id=${bookData.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_a
-pi`
+pi`,
+			description: bookData.volumeInfo.description,
 		});
 	});
 });

@@ -1,4 +1,4 @@
-const logging = require('../../commonUtils/loggingUtil');
+const logging = require('../../commonUtils/loggingUtils');
 const logger = logging.getLogger('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
