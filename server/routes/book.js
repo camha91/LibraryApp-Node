@@ -1,3 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+const dumpDataDirectoryPath = path.join(process.env.ROOT_DIR, './playground/dumpData');
 const bookSearch = require('../utils/bookSearchGoogle');
 const express = require('express');
 const router = new express.Router();
@@ -14,20 +19,30 @@ router.get('/books', (req, res) => {
 
 	bookSearch(req.query.searchType, req.query.searchValue, (error, bookData) => {
 		if (error) {
-			return res.send({ error })
+			return res.send({ error });
 		};
 		logger.debug(`bookData : ${JSON.stringify(bookData)}`);
 		console.log(bookData);
-		res.send({ 
-			id: bookData.id,
+		// Create a bookData dict to store data
+		const resultJSON = { 
+			// id: bookData.id,
 			title: `${bookData.volumeInfo.title}: ${bookData.volumeInfo.subtitle}`,
 			authors: bookData.volumeInfo.authors.join(' , '),
 			categories: bookData.volumeInfo.categories.join(' , '),
 			pageCount: bookData.volumeInfo.pageCount,
-			imageLink: `https://books.google.com/books/content?id=${bookData.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_a
-pi`,
+			imageLink: `https://books.google.com/books/content?id=${bookData.id}&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api`,
 			description: bookData.volumeInfo.description,
-		});
+		};
+		
+		const json_fp = path.join(dumpDataDirectoryPath, `${bookData.id}.json`);
+		logger.info(`Write JSON to file ${json_fp}`);
+		fs.writeFile(json_fp, JSON.stringify(resultJSON), function(err) {
+			if (err) {
+				logger.error(err);
+			};
+		})
+		
+		res.send(resultJSON);
 	});
 });
 

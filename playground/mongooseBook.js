@@ -1,15 +1,32 @@
+
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+const dumpDataDirectoryPath = path.join(process.env.ROOT_DIR, './playground/dumpData');
 const MongoStore = require('../server/store/MongoStore');
 
-const testData = {
-	title: 'Automate the Boring Stuff with Python: Practical Programming for Total Beginners',
-	authors: 'Al Sweigart',
-	categories: 'Computers',
-	pageCount: 504,
-	imageLink:
-		'https://books.google.com/books/content?id=8AcvDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-	description:
-		'If you’ve ever spent hours renaming files or updating hundreds of spreadsheet cells, you know how tedious tasks like these can be. But what if you could have your computer do them for you? In Automate the Boring Stuff with Python, you’ll learn how to use Python to write programs that do in minutes what would take you hours to do by hand—no prior programming experience required. Once you’ve mastered the basics of programming, you’ll create Python programs that effortlessly perform useful and impressive feats of automation to: –Search for text in a file or across multiple files –Create, update, move, and rename files and folders –Search the Web and download online content –Update and format data in Excel spreadsheets of any size –Split, merge, watermark, and encrypt PDFs –Send reminder emails and text notifications –Fill out online forms Step-by-step instructions walk you through each program, and practice projects at the end of each chapter challenge you to improve those programs and use your newfound skills to automate similar tasks. Don’t spend your time doing work a well-trained monkey could do. Even if you’ve never written a line of code, you can make your computer do the grunt work. Learn how in Automate the Boring Stuff with Python. Note: The programs in this book are written to run on Python 3.'
-};
-
 const mongoStore = new MongoStore();
-mongoStore.saveBook(testData);
+
+// Read each file in dumpData
+fs.readdir(dumpDataDirectoryPath, (err, files) => {
+	console.log(files);
+	files.forEach(file => {
+		// Get file directory to each file
+		const file_path = path.join(dumpDataDirectoryPath, file);
+		
+		try {
+			const bookData = require(file_path);
+			// console.log(bookData);
+			const imageLink = bookData.imageLink;
+			bookData.imageLink = imageLink.replace('\n', '');
+			// Each file is a JSON object, push it to DB
+			mongoStore.saveBook(bookData);
+			console.log(`Pushed book in ${file_path} to DB`);
+
+		} catch(e) {
+			console.log(`${file} is BROKEN`);
+		};
+
+	});
+});
