@@ -1,3 +1,5 @@
+const MongoStore = require('../store/MongoStore');
+const mongoStore = new MongoStore();
 const bookSearch = require('../utils/bookSearchGoogle');
 const express = require('express');
 const router = new express.Router();
@@ -30,34 +32,16 @@ router.get('/books', (req, res) => {
 	});
 });
 
-// router.get('/books', (req, res) => {
-//    	logger.debug('<----- Book Router');
-//     if (req.query.completed) {
-//         match.completed = req.query.completed === 'true'
-//     }
-   
-//     if (req.query.sortBy) {
-//         const parts = req.query.sortBy.split(':')
-//         sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
-//     }
+router.get('/books', (req, res) => {
+   	
+	mongoStore.readAllBooks().then((books) => {
+		res.send(books);
+	}).catch((e) => {
+		logger.debug(e);
+	})
+    
 
-//     try {
-// 		// const tasks = await Tasks.find({ owner: req.user._id})
-// 		await req.user.populate({
-//             path: 'tasks',
-//             match,
-//             options: {
-//                 limit: parseInt(req.query.limit),
-//                 skip: parseInt(req.query.skip)
-//             },
-//             sort
-//         }).execPopulate()
-//         res.send(req.user.tasks)
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-
-// })
+})
 
 // router.post('/books', async (req, res) => {
 //     const book = new Books({
