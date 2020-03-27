@@ -6,99 +6,59 @@ const router = new express.Router();
 const logging = require('../../commonUtils/loggingUtils');
 const logger = logging.getLogger(__filename);
 
-router.get('/books', (req, res) => {
-	logger.debug('<----- Book Router');
-	if (!req.query.searchType || !req.query.searchValue) {
-		return res.send({
-			error: "Please provide search Type and search Value!"
-		});
-	};
+// Add book to DB
+router.post('/books', async (req, res) => {
+    logger.info('<----- Book Router');
+    try {
+        const book = await mongoStore.saveBook(req.body);
+        res.status(201).send(book);
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
 
+// Get all books from DB
+router.get('/books', async (req, res) => {
+	try {
+		const books = await mongoStore.readAllBooks();
 
-
-router.get('/books', (req, res) => {
-   	
-mongoStore.readAllBooks().then((books) => {
+		if (!books) {
+			return res.status(404).send()
+		}
 		res.send(books);
-	}).catch((e) => {
-		logger.debug(e);
-	})
-})
+	} catch (e) {
+		res.status(500).send(e);
+	}
+});
 
-// router.post('/books', async (req, res) => {
-//     const book = new Books({
-//         ...req.body,
-//         owner: req.user._id
-//     })
+// Update Book by ID
+router.patch('/books/:id', async (req, res) => {
+	try {
+		const book = await mongoStore.updateBook(req.params.id, req.body);
 
-//     try {
-//         await book.save()
-//         res.status(201).send(book)
-//     } catch (e) {
-//         res.status(400).send(e)
-//     }
-    
-// })
+		if (!book) {
+			return res.status(404).send();
+		}
 
-// GET /tasks?completed=true
-// GET /tasks?limit=2&skip=5
-// GET /tasks?sortBy=createdAt:desc
+		res.send(book);
+	} catch (e) {
+		res.status(400).send(e);
+	}
+});
 
-// router.get('/tasks/:id', auth, async (req, res) => {
-//     try {
-//         const task = await Tasks.findOne({_id: req.params.id, owner: req.user._id })
-		
-//         if (!task) {
-//             return res.status(404).send()
-//         }
+// Delete book by ID
+router.delete('/books/:id', async (req, res) => {
+	try {
+		const book = await mongoStore.deleteBook(req.params.id);
 
-//         res.send(task)
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-    
-// })
+		if (!book) {
+			return res.status(404).send();
+		}
 
-// router.patch('/tasks/:id', auth, async (req, res) => {
-//     const updates = Object.keys(req.body)
-//     const allowedUpdates = ['description', 'completed']
-//     const isValidOperations = updates.every((update) => allowedUpdates.includes(update))
-
-//     if (!isValidOperations) {
-//         return res.status(404).send({'Error': 'Invalid updates!'})
-//     }
-
-//     try {
-// 		const task = await Tasks.findOne({ _id: req.params.id, owner: req.user._id })
-		
-//         if (!task) {
-//             return res.status(404).send()
-//         }
-		
-// 		updates.forEach((update) => task[update] = req.body[update])
-		
-// 		await task.save()
-		
-//         res.send(task)
-//     } catch (e) {
-//         res.status(400).send(e)
-//     }
-// })
-
-// router.delete('/tasks/:id', auth, async (req, res) => {
-//     try {
-//         const task = await Tasks.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
-
-//         if (!task) {
-//             return res.status(404).send()
-//         }
-
-//         res.send(task)
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-// })
-
-
+		res.send(book);
+	} catch (e) {
+		res.status(500).send();
+	}
+});
 
 module.exports = router;

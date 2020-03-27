@@ -15,6 +15,7 @@ class MongoStore {
 		try {
 			await newBook.save();
 			logger.info(`new book ${bookDict.title} saved to DB`);
+			return newBook;
 		} catch(e) {
 			logger.info('save new book to DB failed: ');
 			logger.debug(e);
@@ -79,13 +80,13 @@ class MongoStore {
 		};
 	};
 	
-	async updateBook(id, partialBookDict) {
+	async updateBook(id, bookDict) {
 		try {
-			const update = partialBookDict;
-			const book = await Book.findByIdAndUpdate(id, update, this.updateOptions);
+			const book = await Book.findByIdAndUpdate(id, bookDict, this.updateOptions);
 			logger.info(`Updated Book: ${book}`);
+			return book;
 		} catch(e) {
-			logger.info(`FAiled to update book with id ${id}`);
+			logger.info(`Failed to update book with id ${id}`);
 			logger.debug(e);
 		};
 	};
@@ -95,8 +96,9 @@ class MongoStore {
 			const book = await Book.findByIdAndDelete(id);
 			if (!book) {
 				throw new Error(`The book with ${id} does not exist in the system`);
-			};
+			}
 			logger.info(`Deleted book: ${book}`);
+			return book;
 		} catch (e) {
 			logger.info('Failed to delete book');
 			logger.debug(e);

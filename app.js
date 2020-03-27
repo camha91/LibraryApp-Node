@@ -4,8 +4,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 const bookRouter = require('./server/routes/book');
+const gooBookRouter = require('./server/routes/gooBook');
 
-console.log('https://libraryappnode1-zpicx.run-us-west2.goorm.io');
+// console.log('https://libraryappnode1-zpicx.run-us-west2.goorm.io');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -29,8 +30,9 @@ app.use(logging.expressLogger);
 // Setup static directory to serve
 app.use(express.static(publicPathDirectory));
 
-// Setup book bookRouter
+// Setup bookRouter and gooBookRouter
 app.use(bookRouter);
+app.use(gooBookRouter);
 
 app.get('', (req, res) => {
 	res.render('index', {

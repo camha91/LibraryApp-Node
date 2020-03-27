@@ -1,8 +1,9 @@
 const log4js = require('log4js');
 
-let defaultLevel = 'info';
+let defaultLevel = 'debug';
 
 console.log('https://libraryapp-urmgm.run-us-west2.goorm.io');
+console.log('http://localhost:3000');
 console.log(`log default level is :  ${defaultLevel}`);
 
 log4js.configure({
