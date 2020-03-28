@@ -8,32 +8,35 @@
 	<div class="container">
 		{{>header}}
 
+        <div class="input-field hide-on-med-and-down">
+            <input id="isbn" type="text" placeholder="Please input ISBN">
+            <label for="isbn"></label>
+            <button class="search-btn waves-effect waves-light" type="search" name="action">Search</button>
+        </div>
+
 		<div class="progress hide">
 			<div class="indeterminate"></div>
 		</div>
-		
+
 		<div class="card card-panel teal book-content hide">
 			<div class="row">
-				<span class="card-title white-text">Book Title</span>
+				<span class="book-title white-text">Book Title</span>
 			</div>
             <div class="row">
                 <div class="col s5">
 					<img class="materialboxed book-image" width="400" src="">
 					<div class="card-action center-align">
-						<button class="btn waves-effect waves-light orange black-text left borrow" type="submit" name="action">Borrow
+						<button class="borrow-btn waves-effect waves-light orange black-text left" type="submit" name="action">Borrow
   						</button>
-						<button class="btn waves-effect waves-light red black-text Cancel" type="submit" name="action">Cancel
+						<button class="cancel-btn waves-effect waves-light red black-text" type="submit" name="action">Cancel
   						</button>
 					</div>
                 </div>
                 <div class="col s7">
                     <ul class="collection">
                         <li class="collection-item"><strong>Authors:</strong> <a class="authors" href="#">Camha Nguyen</a></li>
-                        <li class="collection-item pageCount"><strong>Pages:</strong>100</li>
-                        <li class="collection-item">
-                            <strong>Categories:</strong>
-                            <a class="categories" href="#">Finance</a>
-                        </li>
+                        <li class="collection-item"><strong>Pages:</strong> <a class="pageCount" href="#">100</a></li>
+                        <li class="collection-item"><strong>Categories:</strong><a class="categories" href="#">Finance</a></li>
                         <li class="collection-item description card-content">
                             <strong>Description:</strong>
                             <blockquote class="book-summary">
@@ -41,6 +44,47 @@
                             </blockquote>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container book-update hide">
+            <div class="row">
+                <div class="col m10 offset-m1 s12">
+                    <h2 class="center-align">Update Book</h2>
+                    <div class="row">
+                        <form class="col m8 offset-m2 s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="update-title" type="text" placeholder="Title">
+                                    <label for="update-title"></label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="update-author" type="text" placeholder="Author">
+                                    <label for="update-author"></label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="update-page-count" type="text" placeholder="Number of Pages">
+                                    <label for="update-page-count"></label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <textarea id="update-description" class="materialize-textarea" placeholder="Description"></textarea>
+                                    <label for="update-description"></label>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="row">
+                                <div class="col m12">
+                                    <p class="right-align">
+                                        <button class="btn btn-large waves-effect waves-light update-btn" type="button" name="action">Update</button>
+                                        <button class="btn btn-large waves-effect waves-light delete-btn" type="button" name="action">Delete</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -48,6 +48,13 @@ app.get('/about', (req, res) => {
 	});
 });
 
+app.get('*', (req, res) => {
+	res.render('404', {
+		title: '404',
+		errorMessage: 'PAGE NOT FOUND!',
+		name: 'Camha Nguyen'
+	});
+});
 
 app.listen(port, () => {
 	console.log(`Server is up on port ${port}`);
